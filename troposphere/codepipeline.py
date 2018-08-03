@@ -105,6 +105,20 @@ class Stages(AWSProperty):
     }
 
 
+class WebhookAuthConfiguration(AWSProperty):
+    props = {
+        'AllowedIPRange': (basestring, False),
+        'SecretToken': (basestring, False)
+    }
+
+
+class WebhookFilterRule(AWSProperty):
+    props = {
+        'JsonPath': (basestring, True),
+        'MatchEquals': (basestring, False)
+    }
+
+
 class CustomActionType(AWSObject):
     resource_type = "AWS::CodePipeline::CustomActionType"
 
@@ -130,4 +144,19 @@ class Pipeline(AWSObject):
         'RestartExecutionOnUpdate': (boolean, False),
         'RoleArn': (basestring, True),
         'Stages': ([Stages], True)
+    }
+
+
+class Webhook(AWSObject):
+    resource_type = "AWS::CodePipeline::Webhook"
+
+    props = {
+        'AuthenticationConfiguration': (AuthenticationConfiguration, True),
+        'Filters': ([WebhookFilterRule], True),
+        'Authentication': (basestring, True),
+        'TargetPipeline': (basestring, True),
+        'TargetAction': (basetring, True),
+        'Name': (basestring, False),
+        'TargetPipelineVersion': (integer, True),
+        'RegisterWithThirdParty': (boolean, False),
     }
